@@ -22,7 +22,7 @@ contains() {
 # Array to store the open ports
 open_ports=()
 
-# Check all listening TCP ports
+# Check all listening TCP and UDP ports
 netstat -tuln | grep LISTEN | awk '{print $4}' | awk -F':' '{print $NF}' | while read -r port; do
     if ! contains "$port" "${EXCLUDE_PORTS_LIST[@]}"; then
         open_ports+=("$port")
