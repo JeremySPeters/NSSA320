@@ -1,16 +1,13 @@
 #!/bin/bash
 
 # Check if there are any arguments
-if [ "$#" -ne 1 ]; then
-    echo '{"error": "Usage: '$0' <comma-separated ports to exclude>"}'
+if [ "$#" -lt 1 ]; then
+    echo '{"error": "Usage: '$0' <space-separated ports to exclude>"}'
     exit 1
 fi
 
-# Get ports to exclude from the arguments
-EXCLUDE_PORTS=$1
-
-# Convert the comma-separated values to a space-separated list
-EXCLUDE_PORTS_LIST=$(echo $EXCLUDE_PORTS | tr ',' ' ')
+# Convert the arguments to an array
+EXCLUDE_PORTS_LIST=("$@")
 
 # Function to check if a value is in an array
 contains() {
