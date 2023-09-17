@@ -6,12 +6,12 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-# Fetch the webpage content from the root directory
-response=$(curl -s "http://$1/")
+# Get the HTTP response code
+http_response=$(curl -o /dev/null -s -w "%{http_code}" "http://$1/")
 
-# Check for directory listing pattern specific to Apache
-if [[ $response =~ '<title>Index of /</title>' ]]; then
-    echo '{"directory_listing_root": true}'
+# Check the HTTP response code
+if [[ $http_response -eq 403 ]]; then
+    echo '{"directory_listing_disabled": true}'
 else
-    echo '{"directory_listing_root": false}'
+    echo '{"directory_listing_disabled": false}'
 fi
