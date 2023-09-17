@@ -2,7 +2,7 @@
 
 # Check if there are any arguments
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <comma-separated ports to exclude>"
+    echo '{"error": "Usage: '$0' <comma-separated ports to exclude>"}'
     exit 1
 fi
 
@@ -22,9 +22,25 @@ contains() {
     return 1
 }
 
+# Array to store the open ports
+open_ports=()
+
 # Check all listening TCP ports
 netstat -tuln | grep LISTEN | awk '{print $4}' | awk -F':' '{print $NF}' | while read -r port; do
     if ! contains "$port" "${EXCLUDE_PORTS_LIST[@]}"; then
-        echo "Port $port is open."
+        open_ports+=("$port")
     fi
 done
+
+# Construct JSON output
+json_output="{\"open_ports\": ["
+for port in "${open_ports[@]}"; do
+    json_output+="\"$port\","
+done
+
+# Remove the last comma and close the JSON
+json_output=${json_output%,}
+json_output+="]}"
+
+# Print the JSON output
+echo "$json_output"
