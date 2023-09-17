@@ -13,6 +13,6 @@ server_header=$(curl -sI "http://$1" | grep "Server:")
 if [ -z "$server_header" ]; then
     echo '{"server_header_found": false}' | jq .
 else
-    header_value=$(echo "$server_header" | sed 's/Server: //')
+    header_value=$(echo "$server_header" | sed 's/Server: //' | tr -d '\r')
     jq -n --arg hval "$header_value" '{"server_header_found": true, "header_value": $hval}'
 fi
