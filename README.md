@@ -109,7 +109,7 @@ Ex.
 ##### Known Issues
 N/A
 ##### Planned Features
-N/A
+Would like to remove netstat dependency and make this a remote script
 
 ### Remote
 These scripts can be run from any device on the same network segment as target deployment.
