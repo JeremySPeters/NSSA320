@@ -1,4 +1,6 @@
 #!/bin/bash
+# Author: Jeremy Peters
+# Version: 1.0
 
 # Check if an argument is provided
 if [ "$#" -ne 1 ]; then
