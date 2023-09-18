@@ -1,7 +1,8 @@
 #!/bin/bash
+# Author: Jeremy Peters
+# Version: 1.0
 
-# Locations for the Apache config (change these if your setup is different)
-CONFIG_FILES=("/etc/apache2/apache2.conf" "/etc/httpd/httpd.conf")
+CONFIG_FILES=("/etc/httpd/httpd.conf")
 
 DIRECTORY_LISTING_DISABLED=true
 
