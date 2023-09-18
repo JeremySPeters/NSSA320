@@ -11,7 +11,6 @@ Will need to be run by an account that has permssions to access configuration fi
 ##### Notable Interactions
 Reads
 ```bash
-/etc/apache2/apache2.conf
 /etc/httpd/httpd.conf
 ```
 ##### Usage
@@ -39,8 +38,6 @@ Will need to be run by an account that has permssions to access configuration fi
 ##### Notable Interactions
 Reads
 ```bash
-/etc/apache2/apache2.conf
-/etc/apache2/sites-enabled/*
 /etc/httpd/httpd.conf
 /etc/httpd/conf.d/*
 ```
