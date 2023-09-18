@@ -6,6 +6,14 @@ Scripts tagged with "local" in their name must be run on/from the target deploym
 #### Apache Directory Check
 ##### Synopsis   
 Short script to verify server that is not displaying all files from the Apache web root directory.
+##### Requirements
+Will need to be run by an account that has permssions to access configuration files stored in "/etc/".
+##### Notable Interactions
+Reads
+```bash
+/etc/apache2/apache2.conf
+/etc/httpd/httpd.conf
+```
 ##### Usage
 ```bash
 ./local_apache_directory_check.sh
@@ -18,10 +26,24 @@ or
 ```bash
 {"directory_listing_disabled": false}
 ```
+##### Known Issues
+N/A
+##### Planned Features
+- Allow user to pass a path for the configuration file(s) to check as oposed to using hardcoded values
 
 ### FollowSymLink Check
 #### Synopsis
 Script checks that "FollowSymLinks" has been removed from configuration file(s).
+##### Requirements
+Will need to be run by an account that has permssions to access configuration files stored in "/etc/".
+##### Notable Interactions
+Reads
+```bash
+/etc/apache2/apache2.conf
+/etc/apache2/sites-enabled/*
+/etc/httpd/httpd.conf
+/etc/httpd/conf.d/*
+```
 ##### Usage
 ```bash
 ./local_fsl_check.sh
@@ -34,10 +56,18 @@ or
 ```bash
 {"followsymlinks_enabled": false}
 ```
+##### Known Issues
+N/A
+##### Planned Features
+- Allow user to pass a path for the configuration file(s) to check as oposed to using hardcoded values
 
 ### Package Verify
 #### Synopsis
 Checks that given package(s) are installed on deployment.
+##### Requirements
+User who runs script has access to "rpm" command
+##### Notable Interactions
+N/A
 ##### Usage
 ```bash
 ./local_package_check.sh [PACKAGE(S)]
@@ -54,10 +84,19 @@ or
 ```bash
 {"[PACKAGE]": false}
 ```
+##### Known Issues
+N/A
+##### Planned Features
+N/A
 
 ### Port Check
 #### Synopsis
 Checks what ports are open/listening and reports back any that are not excluded from check.
+##### Requirements
+- net-tools package
+- Run by a user who has permission to run netstat
+##### Notable Interactions
+N/A
 ##### Usage
 ```bash
 ./local_port_check.sh [PORT(S) TO EXCLUDE]
@@ -70,12 +109,21 @@ Ex.
 ```bash
 {"open_ports": [PORTS]}
 ```
+##### Known Issues
+N/A
+##### Planned Features
+N/A
 
 ### Remote
 These scripts can be run from any device on the same network segment as target deployment.
 ### Apache Header Check
 #### Synopsis
 Checks that the apache version info has been stripperd from http header.
+##### Requirements
+- jq package
+- Run by a user who has permission to run curl calls.
+##### Notable Interactions
+N/A
 ##### Usage
 ```bash
 ./remote_apache_header_check.sh [IP/HOST]
@@ -96,3 +144,7 @@ or
 ```bash
 {"server_header_found": true, "header_value": Apache}
 ```
+##### Known Issues
+N/A
+##### Planned Features
+Remove "server_header_found" and just operate off of "header_value"
