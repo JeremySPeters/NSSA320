@@ -1,64 +1,98 @@
 # NSSA320
 ## Scripts
-### port_check.sh
-#### Usage
-Base Command
-```bash
-./port_check.sh [ports to exclude]
-```
-Example Usage
-```
-./port_check.sh 20,443,21
-```
-#### Input
-| Argument Description          | Required | Example    |
-|-------------------------------|----------|------------|
-| Comma seperated list of ports | True     | 20,443,21  |
+### Local
+Scripts tagged with "local" in their name must be run on/from the target deployment.
 
-#### Output
-| Key          | Value Description  | Example                                      |
-|--------------|--------------------|----------------------------------------------|
-| open_ports   | list of open ports | ["80", "443", ...]                           |
-| error        | Usage error        | "Usage: ./scriptname <ip_address_or_domain>" |
-##### Examples
-There are open ports
+#### Apache Directory Check
+##### Synopsis   
+Short script to verify server that is not displaying all files from the Apache web root directory.
+##### Usage
 ```bash
-{
-  "open_ports": ["80", "443", ...]
-}
+./local_apache_directory_check.sh
 ```
-No argument is provided
+##### Output
 ```bash
-{
-  "error": "Usage: ./scriptname <comma-separated ports to exclude>"
-}
+{"directory_listing_disabled": true}
 ```
-### Script 2
-
-#### Output
-| Key                 | Value Description       | Example                                      |
-|---------------------|-------------------------|----------------------------------------------|
-| server_header_found | Was apache header found | true                                         |
-| header_value        | Apache header value     | "Apache/2.4.38 (Debian)"                     |
-| error               | Usage error             | "Usage: ./scriptname <ip_address_or_domain>" |
-Header is found
+or
 ```bash
-{
-  "server_header_found": true,
-  "header_value": "Apache/2.4.38 (Debian)"
-}
+{"directory_listing_disabled": false}
 ```
 
-Header is not found
+### FollowSymLink Check
+#### Synopsis
+Script checks that "FollowSymLinks" has been removed from configuration file(s).
+##### Usage
 ```bash
-{
-  "server_header_found": false
-}
+./local_fsl_check.sh
+```
+##### Output
+```bash
+{"followsymlinks_enabled": true}
+```
+or
+```bash
+{"followsymlinks_enabled": false}
 ```
 
-No argument is provided
+### Package Verify
+#### Synopsis
+Checks that given package(s) are installed on deployment.
+##### Usage
 ```bash
-{
-  "error": "Usage: ./scriptname <ip_address_or_domain>"
-}
+./local_package_check.sh [PACKAGE(S)]
+```
+Ex.
+```bash
+./local_package_check.sh fail2ban net-tools
+```
+##### Output
+```bash
+{"[PACKAGE]": true}
+```
+or
+```bash
+{"[PACKAGE]": false}
+```
+
+### Port Check
+#### Synopsis
+Checks what ports are open/listening and reports back any that are not excluded from check.
+##### Usage
+```bash
+./local_port_check.sh [PORT(S) TO EXCLUDE]
+```
+Ex.
+```bash
+./local_port_check.sh 80 22 443
+```
+##### Output
+```bash
+{"open_ports": [PORTS]}
+```
+
+### Remote
+These scripts can be run from any device on the same network segment as target deployment.
+### Apache Header Check
+#### Synopsis
+Checks that the apache version info has been stripperd from http header.
+##### Usage
+```bash
+./remote_apache_header_check.sh [IP/HOST]
+```
+Ex.
+```bash
+./remote_apache_header_check.sh 192.168.123.123
+```
+##### Output
+```bash
+{"server_header_found": false}
+```
+or
+```bash
+{"server_header_found": true, "header_value": Apache/2.4.52 (Ubuntu)}
+```
+or
+```bash
+{"server_header_found": true, "header_value": Apache}
 ```
