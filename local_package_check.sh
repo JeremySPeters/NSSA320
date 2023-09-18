@@ -1,4 +1,6 @@
 #!/bin/bash
+# Author: Jeremy Peters
+# Version: 1.0
 
 # Check if any arguments are provided
 if [ "$#" -lt 1 ]; then
