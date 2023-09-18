@@ -1,7 +1,8 @@
 #!/bin/bash
+# Author: Jeremy Peters
+# Version: 1.0
 
-# Potential locations for the Apache config
-CONFIG_FILES=("/etc/apache2/apache2.conf" "/etc/apache2/sites-enabled/*" "/etc/httpd/httpd.conf" "/etc/httpd/conf.d/*")
+CONFIG_FILES=("/etc/httpd/httpd.conf" "/etc/httpd/conf.d/*")
 
 FOLLOWSYMLINKS_FOUND=false
 
