@@ -17,7 +17,7 @@ ZABBIX_API_URL="http://${ZABBIX_SERVER_IP}:10051/api_jsonrpc.php"
 # Make the API call to retrieve host information
 API_RESPONSE=$(curl -s -X POST -H 'Content-Type: application/json' -d '{
   "jsonrpc": "2.0",
-  "method": "host.get",
+  "method": "hostinterface.get",
   "params": {
     "output": "extend"
   },
